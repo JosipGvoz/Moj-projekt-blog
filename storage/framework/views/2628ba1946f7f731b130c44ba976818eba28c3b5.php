@@ -7,51 +7,45 @@
 
     <div class="row">
     <div class="col-sm-8 blog-main">
+    <?php if($posts): ?>
+    <?php $__currentLoopData = $posts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $post): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
     <div class="blog-post">
-    <h2 class="blog-post-title">Posts Jedan</h2>
-    <p class="blog-post-meta"><small><i>December 23, 2013 by <a href="#">Mario</a><i></small></p>
+    <h2 class="blog-post-title"><?php echo e($post->title); ?></h2>
+    <p class="blog-post-meta"><small><i><?php echo e(Carbon\Carbon::parse($post->created_at)->format('d.m.Y. h:i:s ')); ?><a href=""><?php echo e($post->name); ?></a><i></small></p>
 
-    <p>Tekst članka... <a href="#">Kliknite za više</a></p>
+    <p><?php echo e(\Illuminate\Support\Str::words($post->description, 10, '...')); ?></p>
     <blockquote>
-        <p>Još teksta...<a href="" class="btn btn-primary btn-sm">Learn more</a></p>
+        <a href="<?php echo e(route('post.read', ['id' =>$post->id])); ?>" class="btn btn-primary btn-sm">See more</a></p>
     </blockquote>
     </div>
-
-    <div class="blog-post">
-    <h2 class="blog-post-title">Posts Dva</h2>
-    <p class="blog-post-meta"><small><i>December 24, 2013 by <a href="#">Mario</a><i></small></p>
-
-    <p>Tekst članka... <a href="#">Kliknite za više</a></p>
-    <blockquote>
-        <p>Još teksta...<a href="" class="btn btn-primary btn-sm">Learn more</a></p>
-    </blockquote>
-    </div>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    <?php endif; ?>
 
     <nav class="blog-pagination">
-        <a class="btn btn-outline-primary" href="#">Older</a>
-        <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
-    </nav>
+        <?php echo e($posts -> links()); ?>
 
+    </nav>
+    
     <aside class="col-sm-3 ml-sm-auto blog-sidebar">
         <div class="sidebar-module">
         <h4>Latest Posts</h4>
+        <?php $__currentLoopData = $archives; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $archive): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <ol class="list-unstyled">
-        <li><a href="#">March 2019</a></li>
-        <li><a href="#">Februray 2019</a></li>
-        <li><a href="#">January 2019</a></li>
+            <li><a href="<?php echo e(route('post.read', ['id' =>$post->id])); ?>"><?php echo e(\Illuminate\Support\Str::words($archive->title, 6, '...')); ?></a></li>
         </ol>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
 
-        <aside class="col-sm-3 ml-sm-auto blog-sidebar">
         <div class="sidebar-module">
         <h4>Elsewhere</h4>
         <ol class="list-unstyled">
-        <li><a href="#">GitHub</a></li>
-        <li><a href="#">Twiter</a></li>
-        <li><a href="#">Facebook</a></li>
+        <li><a href="">GitHub</a></li>
+        <li><a href="">Twiter</a></li>
+        <li><a href="">Facebook</a></li>
         </ol>
         </div>
     </aside>
+    </div>
     </div>
     </main>
 <?php $__env->stopSection(); ?>
